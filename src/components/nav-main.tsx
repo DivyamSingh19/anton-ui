@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import {
   SidebarGroup,
@@ -28,11 +29,14 @@ export function NavMain({
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton 
+                asChild
                 tooltip={item.title}
                 className="transition-colors hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground data-[state=active]:bg-sidebar-accent data-[state=active]:text-sidebar-accent-foreground"
               >
-                {item.icon}
-                <span className="font-medium group-data-[collapsible=icon]:hidden">{item.title}</span>
+                <Link href={item.url}>
+                  {item.icon}
+                  <span className="font-medium group-data-[collapsible=icon]:hidden">{item.title}</span>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}

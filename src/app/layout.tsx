@@ -30,10 +30,10 @@ export default function RootLayout({
         className={`antialiased h-full`}
       >
         <TooltipProvider>
-          {/* <AuthProvider> */}
+          <AuthProvider>
             {children}
-            <Toaster position="top-right" />
-          {/* </AuthProvider> */}
+          </AuthProvider>
+          <Toaster position="top-right" />
         </TooltipProvider>
       </body>
     </html>
