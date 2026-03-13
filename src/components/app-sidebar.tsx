@@ -115,22 +115,22 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar 
-      collapsible="none" 
-      className="w-[260px] border-r bg-sidebar/50 backdrop-blur-xl"
+      collapsible="icon" 
+      className="border-r bg-sidebar/50 backdrop-blur-xl"
       {...props}
     >
-      <SidebarHeader className="h-14 border-b flex items-center px-6">
+      <SidebarHeader className="h-14 border-b flex items-center group-data-[collapsible=icon]:px-0 px-6">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="hover:bg-transparent active:bg-transparent"
+              className="hover:bg-transparent active:bg-transparent group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:justify-center"
             >
               <a href="/dashboard" className="flex items-center gap-3">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-lg shadow-primary/20">
+                <div className="flex aspect-square size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-lg shadow-primary/20">
                   <CommandIcon className="size-5" />
                 </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
+                <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
                   <span className="truncate font-bold tracking-tight text-white uppercase">Kaizen UI</span>
                   <span className="truncate text-[10px] text-muted-foreground uppercase tracking-widest">Enterprise</span>
                 </div>
@@ -140,19 +140,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       
-      <SidebarContent className="py-4 px-2 space-y-6">
+      <SidebarContent className="py-4 space-y-6 group-data-[collapsible=icon]:px-0 px-2 overflow-x-hidden">
         <NavMain items={data.navMain} />
         
-        <div className="px-4">
+        <div className="px-4 group-data-[collapsible=icon]:hidden">
           <div className="h-px bg-white/5" />
         </div>
 
         <NavDocuments items={data.documents} />
         
-        <NavSecondary items={data.navSecondary} className="mt-auto pt-4 border-t border-white/5" />
+        <NavSecondary items={data.navSecondary} className="mt-auto pt-4 border-t border-white/5 group-data-[collapsible=icon]:border-t-0" />
       </SidebarContent>
 
-      <SidebarFooter className="border-t bg-sidebar/30 p-2">
+      <SidebarFooter className="border-t bg-sidebar/30 p-2 group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center">
         <NavUser user={data.user} />
       </SidebarFooter>
     </Sidebar>

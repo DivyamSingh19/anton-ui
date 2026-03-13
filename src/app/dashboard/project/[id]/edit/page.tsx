@@ -116,10 +116,9 @@ export default function EditProjectPage() {
   }
 
   return (
-    <div className="text-zinc-100 font-mono">
-      <div className="w-full px-6 py-6 font-mono">
-        {/* Breadcrumb */}
-        <div className="flex items-center gap-3 text-[9px] font-black uppercase tracking-[0.3em] text-zinc-600 mb-10">
+    <div className="text-zinc-100 font-mono w-full">
+      {/* Breadcrumb */}
+      <div className="flex items-center gap-3 text-[9px] font-black uppercase tracking-[0.3em] text-zinc-600 mb-10">
           <Link href="/dashboard/projects" className="hover:text-white transition-colors">Projects</Link>
           <span className="text-zinc-800">/</span>
           <Link href={`/dashboard/project/${id}`} className="hover:text-white transition-colors">Registry_{id.substring(0, 4)}</Link>
@@ -228,7 +227,6 @@ export default function EditProjectPage() {
             Cancel
           </Link>
         </div>
-      </div>
     </div>
   );
 }

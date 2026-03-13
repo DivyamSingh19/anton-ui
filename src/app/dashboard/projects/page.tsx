@@ -71,10 +71,9 @@ export default function ProjectsPage() {
   };
 
   return (
-    <div className="text-zinc-100 font-mono">
-      <div className="w-full px-6 py-6 font-mono">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+    <div className="text-zinc-100 font-mono w-full">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
             <p className="text-[10px] tracking-[0.4em] text-zinc-500 uppercase mb-4 leading-none font-bold">
               Registry 01
@@ -101,13 +100,13 @@ export default function ProjectsPage() {
 
         {/* Loading */}
         {loading ? (
-          <div className="space-y-3">
+          <div className="w-full space-y-8">
             {[...Array(4)].map((_, i) => (
               <div key={i} className="h-24 bg-zinc-900 border border-zinc-800 animate-pulse" />
             ))}
           </div>
         ) : projects.length === 0 ? (
-          <div className="border border-zinc-800 p-20 text-center">
+          <div className="border border-zinc-800 p-20">
             <p className="text-zinc-600 text-sm tracking-widest uppercase">No projects deployed</p>
             <Link href="/projects/new" className="inline-block mt-6 text-xs tracking-widest text-zinc-400 border-b border-zinc-600 pb-px hover:text-white hover:border-white transition-colors">
               Deploy your first →
@@ -209,6 +208,5 @@ export default function ProjectsPage() {
           </div>
         )}
       </div>
-    </div>
   );
 }

@@ -84,10 +84,9 @@ export default function NewProjectPage() {
   };
 
   return (
-    <div className="text-zinc-100 font-mono">
-      <div className="w-full px-6 py-6 font-mono">
-        {/* Breadcrumb */}
-        <div className="flex items-center gap-3 text-[9px] font-black uppercase tracking-[0.3em] text-zinc-600 mb-10">
+    <div className="text-zinc-100 font-mono w-full">
+      {/* Breadcrumb */}
+      <div className="flex items-center gap-3 text-[9px] font-black uppercase tracking-[0.3em] text-zinc-600 mb-10">
           <Link href="/dashboard/projects" className="hover:text-white transition-colors">Projects</Link>
           <span className="text-zinc-800">/</span>
           <span className="text-zinc-400">Creation_Interface</span>
@@ -203,7 +202,6 @@ export default function NewProjectPage() {
             Cancel
           </Link>
         </div>
-      </div>
     </div>
   );
 }
