@@ -57,8 +57,8 @@ export default function NewProjectPage() {
         contractAddress: form.contractAddress.trim(),
         abi: JSON.parse(form.abi),
       });
-      const id = result?.project?._id || result?._id;
-      router.push(id ? `/projects/${id}` : "/projects");
+      const id = result?.id;
+      router.push(id ? `/dashboard/project/${id}` : "/dashboard/projects");
     } catch (err: unknown) {
       const e = err as { message?: string };
       setApiError(e?.message || "Failed to create project");

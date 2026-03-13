@@ -128,8 +128,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <CommandIcon className="size-5" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
-                  <span className="truncate font-bold tracking-tight text-white uppercase">Kaizen UI</span>
-                  <span className="truncate text-[10px] text-muted-foreground uppercase tracking-widest">Enterprise</span>
+                  <span className="truncate font-bold tracking-tight text-white uppercase">Kaizen</span>
                 </div>
               </Link>
             </SidebarMenuButton>

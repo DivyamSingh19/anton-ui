@@ -13,7 +13,7 @@ interface RegisterPayload{
 export const login = async (loginPayload: LoginPayload) => {
   try {
     const res = await http.post(`/user/auth/login`, loginPayload);
-    return res.data;
+    return res.data.data;
   } catch (error) {
     console.error("Error while login", error);
 
@@ -38,7 +38,7 @@ export const register = async (registerPayload: RegisterPayload) => {
     const res = await http.post(`/user/auth/register`, registerPayload,{
         withCredentials:true
     });
-    return res.data;
+    return res.data.data;
   } catch (error) {
     console.error("Error while register", error);
 
@@ -83,7 +83,7 @@ export const me = async()=>{
         const res = await http.get("/user/auth/me",{
             withCredentials:true
         })
-        return res.data
+    return res.data.data;
     } catch (error) {
         console.error("Error while logout",error)
         if(axios.isAxiosError(error)){

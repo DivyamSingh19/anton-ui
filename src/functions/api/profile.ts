@@ -20,7 +20,7 @@ export const getProfile = async () => {
       withCredentials: true,
     });
 
-    return res.data;
+    return res.data.data;
   } catch (error) {
     console.error("Error while fetching profile", error);
 
@@ -47,7 +47,7 @@ export const createProfile = async (payload: CreateProfilePayload) => {
       withCredentials: true,
     });
 
-    return res.data;
+    return res.data.data;
   } catch (error) {
     console.error("Error while creating profile", error);
 
@@ -74,7 +74,7 @@ export const editProfile = async (payload: EditProfilePayload) => {
       withCredentials: true,
     });
 
-    return res.data;
+    return res.data.data;
   } catch (error) {
     console.error("Error while editing profile", error);
 
@@ -101,7 +101,7 @@ export const deleteProfile = async () => {
       withCredentials: true,
     });
 
-    return res.data;
+    return res.data.data;
   } catch (error) {
     console.error("Error while deleting profile", error);
 

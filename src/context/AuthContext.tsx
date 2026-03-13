@@ -43,9 +43,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const loadUser = useCallback(async () => {
     try {
       const data = await fetchMe();
-      // backend: { success: true, data: { id, email, username } }
-      const userObj = data?.data ?? null;
-      setUser(userObj);
+      // data is now { id, email, username } directly
+      setUser(data ?? null);
     } catch (err) {
       if ((err as any)?.status !== 401) {
         console.error("AuthContext: loadUser failed", err);
@@ -71,9 +70,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, [user, loading, pathname, router]);
 
   const login = (data: any) => {
-    // backend login returns: { success, token, data: { id, email, username } }
-    const userObj = data?.data ?? null;
-    if (userObj) setUser(userObj);
+    // data is now { id, email, username } directly
+    if (data) setUser(data);
   };
 
   const logout = async () => {

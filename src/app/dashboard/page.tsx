@@ -15,7 +15,7 @@ import {
 import { getAllProjects } from "@/functions/api/projects"
 
 interface Project {
-  _id: string;
+  id: string;
   title: string;
   status: string;
   createdAt?: string;
@@ -117,8 +117,8 @@ export default function DashboardOverview() {
             ) : (
               projects.slice(0, 5).map((project, i) => (
                 <Link 
-                  key={project._id}
-                  href={`/dashboard/project/${project._id}`}
+                  key={project.id}
+                  href={`/dashboard/project/${project.id}`}
                   className="group flex items-center justify-between p-4 bg-zinc-900/40 border border-white/[0.04] rounded-xl hover:bg-zinc-900/60 hover:border-white/[0.08] transition-all"
                 >
                   <div className="flex items-center gap-4">
@@ -127,7 +127,7 @@ export default function DashboardOverview() {
                     </div>
                     <div>
                       <h4 className="text-sm font-bold text-white mb-0.5">{project.title}</h4>
-                      <p className="text-[10px] text-zinc-500 font-mono italic">ID: {project._id.substring(0, 8)}...</p>
+                      <p className="text-[10px] text-zinc-500 font-mono italic">ID: {project.id.substring(0, 8)}...</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-6">

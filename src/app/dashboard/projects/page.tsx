@@ -5,7 +5,7 @@ import Link from "next/link";
 import { getAllProjects, deleteProject, updateProjectStatus } from "@/functions/api/projects";
 
 interface Project {
-  _id: string;
+  id: string;
   title: string;
   description?: string;
   contractAddress: string;
@@ -49,7 +49,7 @@ export default function ProjectsPage() {
     setDeletingId(id);
     try {
       await deleteProject(id);
-      setProjects((prev) => prev.filter((p) => p._id !== id));
+      setProjects((prev) => prev.filter((p) => p.id !== id));
     } catch (err: unknown) {
       const e = err as { message?: string };
       setError(e?.message || "Delete failed");
@@ -62,7 +62,7 @@ export default function ProjectsPage() {
     try {
       await updateProjectStatus({ projectId, status });
       setProjects((prev) =>
-        prev.map((p) => (p._id === projectId ? { ...p, status } : p))
+        prev.map((p) => (p.id === projectId ? { ...p, status } : p))
       );
     } catch (err: unknown) {
       const e = err as { message?: string };
@@ -116,7 +116,7 @@ export default function ProjectsPage() {
           <div className="grid grid-cols-1 gap-4">
             {projects.map((project, i) => (
               <div
-                key={project._id}
+                key={project.id}
                 className="group relative border border-white/[0.04] bg-zinc-900/40 hover:bg-zinc-900/60 hover:border-white/[0.1] transition-all duration-300 p-5 md:p-8 rounded-xl overflow-hidden"
               >
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
@@ -130,7 +130,7 @@ export default function ProjectsPage() {
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-4 flex-wrap mb-2">
                         <Link
-                          href={`/dashboard/project/${project._id}`}
+                          href={`/dashboard/project/${project.id}`}
                           className="text-xl font-bold text-white hover:text-zinc-300 transition-colors tracking-tight"
                         >
                           {project.title}
@@ -168,7 +168,7 @@ export default function ProjectsPage() {
                     <div className="relative group/select">
                       <select
                         value={project.status || ""}
-                        onChange={(e) => handleStatusChange(project._id, e.target.value)}
+                        onChange={(e) => handleStatusChange(project.id, e.target.value)}
                         className="appearance-none bg-zinc-800 border border-white/10 text-zinc-300 text-[10px] font-bold tracking-widest uppercase px-4 py-2.5 rounded-lg focus:outline-none focus:border-white/20 cursor-pointer pr-10"
                       >
                         {["active", "inactive", "pending", "deprecated"].map((s) => (
@@ -183,17 +183,17 @@ export default function ProjectsPage() {
                     </div>
                     
                     <Link
-                      href={`/dashboard/project/${project._id}/edit`}
+                      href={`/dashboard/project/${project.id}/edit`}
                       className="px-4 py-2.5 text-[10px] font-black border border-white/10 text-zinc-400 hover:border-white hover:text-white transition-all uppercase tracking-widest rounded-lg"
                     >
                       Edit
                     </Link>
                     <button
-                      onClick={() => handleDelete(project._id)}
-                      disabled={deletingId === project._id}
+                      onClick={() => handleDelete(project.id)}
+                      disabled={deletingId === project.id}
                       className="px-4 py-2.5 text-[10px] font-black border border-white/5 text-zinc-600 hover:border-red-500/30 hover:text-red-400 transition-all uppercase tracking-widest rounded-lg disabled:opacity-30"
                     >
-                      {deletingId === project._id ? "..." : "Delete"}
+                      {deletingId === project.id ? "..." : "Delete"}
                     </button>
                   </div>
                 </div>

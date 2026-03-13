@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { getProjectById,deleteProject } from "@/functions/api/projects";
 interface Project {
-  _id: string;
+  id: string;
   title: string;
   description?: string;
   contractAddress: string;
@@ -35,7 +35,7 @@ export default function ProjectDetailPage() {
     const fetch = async () => {
       try {
         const data = await getProjectById(id);
-        setProject(data?.project || data);
+        setProject(data);
       } catch (err: unknown) {
         const e = err as { message?: string };
         setError(e?.message || "Failed to load project");
@@ -94,14 +94,14 @@ export default function ProjectDetailPage() {
       <div className="flex items-center gap-3 text-[9px] font-black uppercase tracking-[0.3em] text-zinc-600 mb-10">
           <Link href="/dashboard/projects" className="hover:text-white transition-colors">Projects</Link>
           <span className="text-zinc-800">/</span>
-          <span className="text-zinc-400">Registry_{project._id.substring(0, 4)}</span>
+          <span className="text-zinc-400">Registry_{project.id.substring(0, 4)}</span>
         </div>
 
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-4 mb-4">
-              <span className={`text-[9px] font-black tracking-[0.2em] uppercase border px-2.5 py-1 rounded-sm ${STATUS_COLORS[project.status] || STATUS_COLORS.inactive}`}>
+              <span className={`text-[9px] font-black tracking-[0.2em] uppercase italic border px-2.5 py-1 rounded-sm ${STATUS_COLORS[project.status] || STATUS_COLORS.inactive}`}>
                 {project.status}
               </span>
               <span className="text-[10px] text-zinc-600 font-bold uppercase tracking-widest italic">Live Interface</span>
@@ -134,7 +134,7 @@ export default function ProjectDetailPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
           {[
             { label: "Execution Address", value: project.contractAddress, mono: true },
-            { label: "Internal Identity", value: project._id, mono: true },
+            { label: "Internal Identity", value: project.id, mono: true },
             { 
               label: "Genesis Date", 
               value: project.createdAt ? new Date(project.createdAt).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : "N/A" 

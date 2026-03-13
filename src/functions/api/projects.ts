@@ -36,7 +36,7 @@ export const addProject = async (payload: AddProjectPayload) => {
     const res = await http.post("/user/projects/add", payload, {
       withCredentials: true,
     });
-    return res.data;
+    return res.data.data;
   } catch (error) {
     handleError(error, "Failed to create project");
   }
@@ -47,40 +47,48 @@ export const getAllProjects = async () => {
     const res = await http.get("/user/projects/all", {
       withCredentials: true,
     });
-    return res.data;
+    return res.data.data;
   } catch (error) {
     handleError(error, "Failed to fetch projects");
   }
 };
 
+// FIX: Controller reads projectId from req.body, so use POST with body
 export const getProjectById = async (id: string) => {
   try {
-    const res = await http.get(`/user/projects/${id}`, {
-      withCredentials: true,
-    });
-    return res.data;
+    const res = await http.post(
+      `/user/projects/id`,
+      { projectId: id },
+      { withCredentials: true }
+    );
+    return res.data.data;
   } catch (error) {
     handleError(error, "Failed to fetch project");
   }
 };
 
+// FIX: Controller reads projectId from req.body, not URL param
 export const editProject = async (id: string, payload: EditProjectPayload) => {
   try {
-    const res = await http.put(`/user/projects/edit/${id}`, payload, {
-      withCredentials: true,
-    });
-    return res.data;
+    const res = await http.put(
+      `/user/projects/edit`,
+      { projectId: id, ...payload },
+      { withCredentials: true }
+    );
+    return res.data.data;
   } catch (error) {
     handleError(error, "Failed to update project");
   }
 };
 
+// FIX: Controller reads projectId from req.body, so use DELETE with body
 export const deleteProject = async (id: string) => {
   try {
-    const res = await http.delete(`/user/projects/${id}`, {
+    const res = await http.delete(`/user/projects/delete`, {
+      data: { projectId: id },
       withCredentials: true,
     });
-    return res.data;
+    return res.data.data;
   } catch (error) {
     handleError(error, "Failed to delete project");
   }
@@ -91,7 +99,7 @@ export const updateProjectStatus = async (payload: UpdateStatusPayload) => {
     const res = await http.put("/user/projects/status", payload, {
       withCredentials: true,
     });
-    return res.data;
+    return res.data.data;
   } catch (error) {
     handleError(error, "Failed to update project status");
   }
