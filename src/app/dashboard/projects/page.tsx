@@ -92,7 +92,7 @@ export default function ProjectsPage() {
             <h1 className="text-5xl font-bold tracking-tight text-white">
               PROJECTS
             </h1>
-            <div className="mt-3 h-px w-24 bg-gradient-to-r from-white to-transparent" />
+            <div className="mt-3 h-px w-24 bg-linear-to-r from-white to-transparent" />
           </div>
           <Link
             href="/projects/new"
