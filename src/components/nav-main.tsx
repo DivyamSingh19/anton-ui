@@ -32,7 +32,7 @@ export function NavMain({
                 className="transition-colors hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground data-[state=active]:bg-sidebar-accent data-[state=active]:text-sidebar-accent-foreground"
               >
                 {item.icon}
-                <span className="font-medium">{item.title}</span>
+                <span className="font-medium group-data-[collapsible=icon]:hidden">{item.title}</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}
