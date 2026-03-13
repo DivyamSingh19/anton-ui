@@ -22,13 +22,13 @@ import {
 import { WebhookCard } from "@/components/integrations/WebhookCard";
 
 export default function WebhooksPage() {
-  const [webhooks, setWebhooks] = useState<{ discordUrl: string | null; slackurl: string | null } | null>(null);
+  const [webhooks, setWebhooks] = useState<{ discordUrl: string | null; slackUrl?: string | null; slackurl?: string | null } | null>(null);
   const [loading, setLoading] = useState(true);
 
   const fetchWebhooks = async () => {
     try {
       const data = await getUserWebhooks();
-      setWebhooks(data || { discordUrl: null, slackurl: null });
+      setWebhooks(data || { discordUrl: null, slackUrl: null });
     } catch (err) {
       console.error("Failed to load webhooks", err);
     } finally {
@@ -95,7 +95,7 @@ export default function WebhooksPage() {
           title="Slack"
           description="Streamline team collaboration by piping execution logs and deployment triggers into Slack."
           icon={<MessageSquareIcon className="size-6" />}
-          url={webhooks?.slackurl || null}
+          url={webhooks?.slackUrl || webhooks?.slackurl || null}
           platform="slack"
           onAdd={async (url) => { await addSlackWebhook(url); await fetchWebhooks(); }}
           onUpdate={async (url) => { await updateSlackWebhook(url); await fetchWebhooks(); }}
@@ -106,7 +106,7 @@ export default function WebhooksPage() {
       {/* Overview Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {[
-          { label: "Active Channels", value: (webhooks?.discordUrl ? 1 : 0) + (webhooks?.slackurl ? 1 : 0), icon: <ZapIcon className="size-4" /> },
+          { label: "Active Channels", value: (webhooks?.discordUrl ? 1 : 0) + (webhooks?.slackUrl || webhooks?.slackurl ? 1 : 0), icon: <ZapIcon className="size-4" /> },
           { label: "Relay Latency", value: "< 240ms", icon: <ShieldCheckIcon className="size-4" /> },
           { label: "Daily Dispatch", value: "0/10k", icon: <ActivityIcon className="size-4" /> },
         ].map((stat, i) => (

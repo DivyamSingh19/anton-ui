@@ -9,7 +9,8 @@ interface UserWebhooks {
   id: string;
   userId: string;
   discordUrl: string | null;
-  slackurl: string | null;
+  slackUrl?: string | null;
+  slackurl?: string | null;
 }
 
 const handleError = (error: unknown, fallbackMessage: string): never => {
