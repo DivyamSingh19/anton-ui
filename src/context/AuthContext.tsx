@@ -32,9 +32,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const loadUser = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/auth/me`, {
-          credentials: "include",
-        });
+        const res = await g
 
         if (res.ok) {
           const data = await res.json();
