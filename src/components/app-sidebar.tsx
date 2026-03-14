@@ -17,7 +17,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { LayoutDashboardIcon, FolderIcon, Settings2Icon, CircleHelpIcon, SearchIcon, DatabaseIcon, FileChartColumnIcon, FileIcon, CommandIcon, ActivityIcon, WebhookIcon ,Crosshair} from "lucide-react"
+import { LayoutDashboardIcon, FolderIcon, Settings2Icon, CircleHelpIcon, SearchIcon, DatabaseIcon, FileChartColumnIcon, FileIcon, CommandIcon, ActivityIcon, WebhookIcon ,Crosshair, ShieldCheckIcon} from "lucide-react"
 
 const data = {
   navMain: [
@@ -66,6 +66,13 @@ const data = {
       url:"/dashboard/attacks",
       icon:(
         <Crosshair/>
+      ),
+    },
+    {
+      title:"Timelock",
+      url:"/test/timelock",
+      icon:(
+        <ShieldCheckIcon/>
       ),
     }
   ],
