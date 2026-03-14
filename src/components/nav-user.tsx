@@ -106,15 +106,15 @@ export function NavUser({
             <DropdownMenuGroup>
               <DropdownMenuItem className="focus:bg-white/5 focus:text-white cursor-pointer transition-colors">
                 <CircleUserRoundIcon className="size-4" />
-                <span>Account</span>
+                <a href="/dashboard/profile">Profile</a>
               </DropdownMenuItem>
               <DropdownMenuItem className="focus:bg-white/5 focus:text-white cursor-pointer transition-colors">
                 <CreditCardIcon className="size-4" />
-                <span>Billing</span>
+                <a href="/dashboard/projects">Projects</a>
               </DropdownMenuItem>
               <DropdownMenuItem className="focus:bg-white/5 focus:text-white cursor-pointer transition-colors">
                 <BellIcon className="size-4" />
-                <span>Notifications</span>
+                <a href="/dashboard/attacks">Attacks</a>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator className="bg-white/5" />

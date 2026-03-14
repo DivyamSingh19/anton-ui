@@ -17,7 +17,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { LayoutDashboardIcon, FolderIcon, Settings2Icon, CircleHelpIcon, SearchIcon, DatabaseIcon, FileChartColumnIcon, FileIcon, CommandIcon, ActivityIcon, WebhookIcon } from "lucide-react"
+import { LayoutDashboardIcon, FolderIcon, Settings2Icon, CircleHelpIcon, SearchIcon, DatabaseIcon, FileChartColumnIcon, FileIcon, CommandIcon, ActivityIcon, WebhookIcon ,Crosshair} from "lucide-react"
 
 const data = {
   navMain: [
@@ -53,60 +53,25 @@ const data = {
         />
       ),
     },
-  ],
-  navClouds: [],
-  navSecondary: [
     {
-      title: "Settings",
-      url: "#",
+      title: "Stats",
+      url: "/dashboard/stats",
       icon: (
         <Settings2Icon
         />
       ),
     },
     {
-      title: "Get Help",
-      url: "#",
-      icon: (
-        <CircleHelpIcon
-        />
+      title:"Attacks",
+      url:"/dashboard/attacks",
+      icon:(
+        <Crosshair/>
       ),
-    },
-    {
-      title: "Search",
-      url: "#",
-      icon: (
-        <SearchIcon
-        />
-      ),
-    },
+    }
   ],
-  documents: [
-    {
-      name: "Data Library",
-      url: "#",
-      icon: (
-        <DatabaseIcon
-        />
-      ),
-    },
-    {
-      name: "Reports",
-      url: "#",
-      icon: (
-        <FileChartColumnIcon
-        />
-      ),
-    },
-    {
-      name: "Word Assistant",
-      url: "#",
-      icon: (
-        <FileIcon
-        />
-      ),
-    },
-  ],
+  navClouds: [],
+  
+  
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -143,9 +108,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <div className="h-px bg-white/5" />
         </div>
 
-        <NavDocuments items={data.documents} />
+        {/* <NavDocuments items={data.documents} /> */}
         
-        <NavSecondary items={data.navSecondary} className="mt-auto pt-4 border-t border-white/5 group-data-[collapsible=icon]:border-t-0" />
+        {/* <NavSecondary items={data.navSecondary} className="mt-auto pt-4 border-t border-white/5 group-data-[collapsible=icon]:border-t-0" /> */}
       </SidebarContent>
 
       <SidebarFooter className="border-t bg-sidebar/30 p-2 gap-1 group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:flex-col group-data-[collapsible=icon]:items-center">
