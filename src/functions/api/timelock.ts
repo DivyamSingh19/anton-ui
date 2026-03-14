@@ -1,100 +1,182 @@
 import http from "@/functions/http";
 import axios from "axios";
-
-export interface TimelockConfig {
-  DEFAULT_LOCK_DURATION: number;
-  MAX_LOCK_DURATION: number;
-  KAIZEN_EXECUTOR: string;
-}
-
-export interface TimelockStatus {
+ 
+export interface TriggerTimelockPayload {
   target: string;
-  isLocked: boolean;
-  lockDuration: number;
-  lockedUntil: number;
-  initiator?: string;
+  callData: string;
 }
 
-export interface TimelockEvent {
-  id: string;
-  type: "Triggered" | "Unlocked" | "DurationUpdated";
+export interface ManualUnlockPayload {
   target: string;
-  timestamp: number;
-  data: any;
+  callData: string;
 }
 
-export const getConfig = async (): Promise<TimelockConfig> => {
+export interface SetLockDurationPayload {
+  target: string;
+  duration: number;
+}
+
+interface EventQuery {
+  fromBlock?: number;
+  toBlock?: number;
+}
+
+/* ───────────────── HELPER ───────────────── */
+
+function handleAxiosError(error: unknown, fallback: string) {
+  console.error(fallback, error);
+
+  if (axios.isAxiosError(error)) {
+    const status = error.response?.status;
+    const message =
+      error.response?.data?.error ||
+      error.response?.data?.message ||
+      error.message ||
+      fallback;
+
+    throw { status, message };
+  }
+
+  throw {
+    status: 500,
+    message: "Unexpected error",
+  };
+}
+
+/* ───────────────── CONFIG ───────────────── */
+
+export const getTimelockConfig = async () => {
   try {
-    const res = await http.get("/timelock/config");
-    return res.data;
+    const res = await http.get(`/user/timelock/config`);
+    return res.data.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw { status: error.response?.status, message: error.response?.data?.message || "Failed to fetch timelock config" };
-    }
-    throw { status: 500, message: "Unexpected error" };
+    handleAxiosError(error, "Failed to fetch config");
   }
 };
 
-export const getStatus = async (target: string): Promise<TimelockStatus> => {
+/* ───────────────── READ ───────────────── */
+
+export const getTimelockStatus = async (target: string) => {
   try {
-    const res = await http.get(`/timelock/status/${target}`);
-    return res.data;
+    const res = await http.get(`/user/timelock/status/${target}`);
+    return res.data.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw { status: error.response?.status, message: error.response?.data?.message || `Failed to fetch status for ${target}` };
-    }
-    throw { status: 500, message: "Unexpected error" };
+    handleAxiosError(error, "Failed to fetch status");
   }
 };
 
-export const triggerTimelock = async (target: string, callData: string) => {
+export const getIsLocked = async (target: string) => {
   try {
-    const res = await http.post("/timelock/trigger", { target, callData });
-    return res.data;
+    const res = await http.get(`/user/timelock/is-locked/${target}`);
+    return res.data.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw { status: error.response?.status, message: error.response?.data?.message || "Failed to trigger timelock" };
-    }
-    throw { status: 500, message: "Unexpected error" };
+    handleAxiosError(error, "Failed to fetch lock state");
   }
 };
 
-export const manualUnlock = async (target: string) => {
+export const getLockDuration = async (target: string) => {
   try {
-    const res = await http.post("/timelock/unlock", { target });
-    return res.data;
+    const res = await http.get(`/user/timelock/lock-duration/${target}`);
+    return res.data.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw { status: error.response?.status, message: error.response?.data?.message || "Emergency unlock failed" };
-    }
-    throw { status: 500, message: "Unexpected error" };
+    handleAxiosError(error, "Failed to fetch lock duration");
   }
 };
 
-export const setLockDuration = async (target: string, duration: number) => {
+export const getLockedUntil = async (target: string) => {
   try {
-    const res = await http.put("/timelock/duration", { target, duration });
-    return res.data;
+    const res = await http.get(`/user/timelock/locked-until/${target}`);
+    return res.data.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw { status: error.response?.status, message: error.response?.data?.message || "Failed to update lock duration" };
-    }
-    throw { status: 500, message: "Unexpected error" };
+    handleAxiosError(error, "Failed to fetch lockedUntil");
   }
 };
 
-export const getEvents = async (type?: string, range?: string): Promise<TimelockEvent[]> => {
+/* ───────────────── WRITE ───────────────── */
+
+export const triggerTimelock = async (payload: TriggerTimelockPayload) => {
   try {
-    const params = new URLSearchParams();
-    if (type) params.append("type", type);
-    if (range) params.append("range", range);
-    
-    const res = await http.get(`/timelock/events?${params.toString()}`);
-    return res.data;
+    const res = await http.post(`/user/timelock/trigger`, payload);
+    return res.data.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw { status: error.response?.status, message: error.response?.data?.message || "Failed to fetch timelock events" };
-    }
-    throw { status: 500, message: "Unexpected error" };
+    handleAxiosError(error, "Failed to trigger timelock");
+  }
+};
+
+export const manualUnlock = async (payload: ManualUnlockPayload) => {
+  try {
+    const res = await http.post(`/user/timelock/manual-unlock`, payload);
+    return res.data.data;
+  } catch (error) {
+    handleAxiosError(error, "Failed to unlock protocol");
+  }
+};
+
+export const setLockDuration = async (payload: SetLockDurationPayload) => {
+  try {
+    const res = await http.post(`/user/timelock/set-lock-duration`, payload);
+    return res.data.data;
+  } catch (error) {
+    handleAxiosError(error, "Failed to update lock duration");
+  }
+};
+
+/* ───────────────── AUTHORITY ───────────────── */
+
+export const checkTimelockAuthority = async (
+  target: string,
+  selector: string
+) => {
+  try {
+    const res = await http.get(
+      `/user/timelock/authority/can-execute?target=${target}&selector=${selector}`
+    );
+    return res.data.data;
+  } catch (error) {
+    handleAxiosError(error, "Failed authority check");
+  }
+};
+
+export const getTimelockOwner = async (target: string) => {
+  try {
+    const res = await http.get(`/user/timelock/authority/owner/${target}`);
+    return res.data.data;
+  } catch (error) {
+    handleAxiosError(error, "Failed to fetch owner");
+  }
+};
+
+/* ───────────────── EVENTS ───────────────── */
+
+export const getTimelockTriggeredEvents = async (query?: EventQuery) => {
+  try {
+    const res = await http.get(`/user/timelock/events/triggered`, {
+      params: query,
+    });
+    return res.data.data;
+  } catch (error) {
+    handleAxiosError(error, "Failed to fetch triggered events");
+  }
+};
+
+export const getTimelockUnlockedEvents = async (query?: EventQuery) => {
+  try {
+    const res = await http.get(`/user/timelock/events/unlocked`, {
+      params: query,
+    });
+    return res.data.data;
+  } catch (error) {
+    handleAxiosError(error, "Failed to fetch unlocked events");
+  }
+};
+
+export const getDurationUpdatedEvents = async (query?: EventQuery) => {
+  try {
+    const res = await http.get(`/user/timelock/events/duration-updated`, {
+      params: query,
+    });
+    return res.data.data;
+  } catch (error) {
+    handleAxiosError(error, "Failed to fetch duration updated events");
   }
 };
