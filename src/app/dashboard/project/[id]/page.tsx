@@ -116,7 +116,7 @@ export default function ProjectDetailPage() {
           <div className="flex items-center gap-3 shrink-0">
             <Link
               href={`/dashboard/project/${id}/edit`}
-              className="px-6 py-4 bg-white text-black text-[10px] font-black uppercase tracking-[0.2em] hover:bg-zinc-200 transition-all rounded-xl shadow-xl shadow-white/5"
+              className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-200 rounded-xl shadow-xl shadow-white/5 border border-white/20 text-white hover:text-black hover:border-[#aaff00] bg-transparent hover:bg-[#aaff00]"
             >
               Configure
             </Link>
@@ -163,7 +163,7 @@ export default function ProjectDetailPage() {
               <span className="text-[9px] font-black uppercase tracking-[0.3em] text-zinc-600">Contract ABI Interface</span>
               <span className="text-[9px] font-bold text-zinc-800 uppercase tracking-widest px-2 py-0.5 border border-white/[0.02] rounded">JSON_STRUCT</span>
             </div>
-            <div className={`size-6 rounded-lg border border-white/[0.04] flex items-center justify-center text-zinc-600 group-hover:text-white transition-all ${abiExpanded ? "rotate-180" : ""}`}>
+            <div className={`size-6 rounded-lg border border-white/[0.04] flex items-center justify-center text-zinc-600 group-hover:text-[#aaff00] group-hover:border-[#aaff00]/50 transition-all ${abiExpanded ? "rotate-180" : ""}`}>
               <svg className="size-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
               </svg>

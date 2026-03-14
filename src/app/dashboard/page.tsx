@@ -72,7 +72,7 @@ export default function DashboardOverview() {
           </div>
           <Link
             href="/dashboard/projects/new"
-            className="flex items-center gap-2 bg-white px-5 py-3 text-[10px] font-black tracking-[0.2em] uppercase hover:bg-zinc-200 transition-all text-black rounded-lg shadow-xl shadow-white/5"
+            className="flex items-center gap-2 px-5 py-3 text-[10px] font-black tracking-[0.2em] uppercase transition-all rounded-lg shadow-xl shadow-white/5 border border-white/20 text-white hover:text-black hover:border-[#aaff00] bg-transparent hover:bg-[#aaff00]"
           >
             <PlusIcon size={14} strokeWidth={3} />
             <span>New Action</span>
@@ -170,7 +170,7 @@ export default function DashboardOverview() {
                 </div>
               </div>
             ))}
-            <button className="w-full py-3 text-[9px] font-black uppercase tracking-[0.2em] text-zinc-500 hover:text-white border border-white/5 rounded-lg hover:bg-white/5 transition-all">
+            <button className="w-full py-3 text-[9px] font-black uppercase tracking-[0.2em] text-zinc-500 hover:text-black hover:border-[#aaff00] bg-transparent hover:bg-[#aaff00] rounded-lg transition-all duration-200">
               View Full Logs
             </button>
           </div>
