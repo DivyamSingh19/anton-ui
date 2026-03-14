@@ -67,12 +67,12 @@ const data = {
     },
     {
       title: "Timelock",
-      url: "/test/timelock",
+      url: "/dashboard/timelock",
       icon: <ShieldCheckIcon />,
     },
     {
       title: "Kill switch",
-      url: "/dashboard/kill-switch",
+      url: "/dashboard/killswitch",
       icon: <ShieldCheckIcon />,
     },
   ],

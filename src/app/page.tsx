@@ -8,9 +8,9 @@ const page = () => {
   return (
     <div className="min-h-screen bg-[#0d0d0d] flex flex-col">
       <div className="p-4">
-        <Navbar/>
+        <Navbar />
       </div>
-      
+
       <main className="flex-1 flex flex-col items-center justify-center p-6 text-center">
         <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-white uppercase mb-6">
           Welcome to <span className="text-[#aaff00]">Kaizen</span>
@@ -21,10 +21,10 @@ const page = () => {
         <SignInButton href="/register" label="GET STARTED" />
       </main>
       <section id="how-it-works">
-        <HowItWorks/>
+        <HowItWorks />
       </section>
       <section id='footer'>
-        <Footer/>
+        <Footer />
       </section>
     </div>
   )

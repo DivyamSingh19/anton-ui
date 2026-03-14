@@ -72,10 +72,12 @@ export default function ProjectMonitoringPage() {
         const formattedData = Array.isArray(series) ? series.map((item: any) => ({
           ...item,
           timestamp: new Date(item._time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          // Ensure we have some numeric value even if the specific field isn't present
-          activity: item.activity || item.value || 0,
-          gasUsed: item.gasUsed || 0,
-          txCount: item.txCount || 0
+          // Map InfluxDB fields to chart keys
+          activity: Number(item.total_function_calls) || 0,
+          gasUsed: Number(item.avg_gas_price) || 0,
+          uniqueCallers: Number(item.unique_callers) || 0,
+          ethInflow: Number(item.total_eth_inflow) || 0,
+          txHash: item.txHash || item.hash || null,
         })) : [];
         setTimeSeriesData(formattedData);
       }
@@ -312,6 +314,7 @@ export default function ProjectMonitoringPage() {
             <thead>
               <tr className="border-b border-white/[0.04] bg-zinc-900/50">
                 <th className="px-6 py-4 text-[9px] font-black uppercase tracking-widest text-zinc-500">Timestamp</th>
+                <th className="px-6 py-4 text-[9px] font-black uppercase tracking-widest text-zinc-500">Transaction Hash</th>
                 <th className="px-6 py-4 text-[9px] font-black uppercase tracking-widest text-zinc-500">Activity_Idx</th>
                 <th className="px-6 py-4 text-[9px] font-black uppercase tracking-widest text-zinc-500">Gas_Metadata</th>
                 <th className="px-6 py-4 text-[9px] font-black uppercase tracking-widest text-zinc-500">Status</th>
@@ -320,9 +323,18 @@ export default function ProjectMonitoringPage() {
             <tbody className="divide-y divide-white/[0.02]">
               {timeSeriesData.length > 0 ? timeSeriesData.slice(0, 5).map((row, i) => (
                 <tr key={i} className="hover:bg-zinc-800/20 transition-colors">
-                  <td className="px-6 py-4 text-[10px] text-zinc-400 font-mono">{row._time}</td>
+                  <td className="px-6 py-4 text-[10px] text-zinc-400 font-mono">{row.timestamp}</td>
+                  <td className="px-6 py-4 text-[10px] text-zinc-400 font-mono">
+                    {row.txHash ? (
+                      <span className="bg-white/5 border border-white/5 px-2 py-1 rounded text-primary hover:text-white transition-colors cursor-pointer select-all">
+                        {row.txHash.substring(0, 10)}...{row.txHash.substring(row.txHash.length - 8)}
+                      </span>
+                    ) : (
+                      <span className="text-zinc-700 italic">No_Hash_Logged</span>
+                    )}
+                  </td>
                   <td className="px-6 py-4 text-[10px] text-white font-bold">{row.activity} units</td>
-                  <td className="px-6 py-4 text-[10px] text-zinc-500">{row.gasUsed} GWEI</td>
+                  <td className="px-6 py-4 text-[10px] text-zinc-500">{(row.gasUsed * 1e9).toFixed(2)} GWEI</td>
                   <td className="px-6 py-4">
                     <span className="text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Synced</span>
                   </td>

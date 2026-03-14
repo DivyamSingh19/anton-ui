@@ -151,7 +151,7 @@ export default function HowItWorks() {
           <span className="absolute top-[-4px] right-[-4px] w-2.5 h-2.5 bg-[#a3e635]" />
           <span className="absolute bottom-[-4px] left-[-4px] w-2.5 h-2.5 bg-[#a3e635]" />
           <span className="absolute bottom-[-4px] right-[-4px] w-2.5 h-2.5 bg-[#a3e635]" />
-            
+
           <h2 className="text-center text-sm md:text-base xl:text-lg tracking-[0.2em] text-[#a855f7] uppercase">
             Continuous protection for smart contracts — from monitoring to autonomous defense.
           </h2>
@@ -162,11 +162,10 @@ export default function HowItWorks() {
           {steps.map((step, i) => (
             <div
               key={step.number}
-              className={`border-[#2a2a2a] flex flex-col ${
-                i < steps.length - 1
+              className={`border-[#2a2a2a] flex flex-col ${i < steps.length - 1
                   ? "border-b sm:border-b-0 sm:border-r lg:border-r"
                   : ""
-              }`}
+                }`}
             >
               <StepCard step={step} index={i} />
             </div>
