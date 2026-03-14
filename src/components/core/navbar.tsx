@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
+import SignInButton from "@/components/buttons/secondary";
 
 const navLinks = [
   { label: "HOME", href: "/" },
@@ -61,12 +62,9 @@ export default function KaizenNavbar() {
       </ul>
 
       {/* CTA Button */}
-      <Link
-        href={ctaButton.href}
-        className="hidden md:inline-flex items-center px-5 py-2 bg-[#aaff00] text-black text-xs font-extrabold tracking-widest uppercase rounded-full hover:bg-[#c8ff40] active:scale-95 transition-all duration-150"
-      >
-        {ctaButton.label}
-      </Link>
+      <div className="hidden md:block">
+        <SignInButton href={ctaButton.href} label={ctaButton.label} size="sm" />
+      </div>
 
       {/* Mobile Hamburger */}
       <button
@@ -93,12 +91,9 @@ export default function KaizenNavbar() {
               {label}
             </Link>
           ))}
-          <Link
-            href={ctaButton.href}
-            className="mt-2 text-center px-5 py-2 bg-[#aaff00] text-black text-xs font-extrabold tracking-widest uppercase rounded-full hover:bg-[#c8ff40] transition-colors"
-          >
-            {ctaButton.label}
-          </Link>
+          <div className="mt-2 text-center w-full flex justify-center">
+            <SignInButton href={ctaButton.href} label={ctaButton.label} size="sm" />
+          </div>
         </div>
       )}
     </nav>

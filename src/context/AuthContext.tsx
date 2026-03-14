@@ -33,7 +33,10 @@ const AuthContext = createContext<AuthContextType>({
   refreshUser: async () => {},
 });
 
-const PUBLIC_ONLY_ROUTES = ["/login", "/register", "/signup"];
+const isPublicOnlyPath = (path: string) =>
+  path.startsWith("/login") ||
+  path.startsWith("/register") ||
+  path.startsWith("/signup");
 
 const isProtectedPath = (path: string) =>
   path.startsWith("/dashboard") ||
@@ -71,10 +74,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     if (!user && isProtectedPath(pathname)) {
       router.replace("/login");
-    } else if (user && PUBLIC_ONLY_ROUTES.includes(pathname)) {
+    } else if (user && isPublicOnlyPath(pathname)) {
       router.replace("/dashboard");
     }
   }, [user, loading, pathname, router]);
+
+  // Prevent flash by avoiding rendering until auth state is known
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-[#0d0d0d]">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#aaff00]"></div>
+      </div>
+    );
+  }
 
   const login = (data: any) => {
     // data is now { id, email, username } directly

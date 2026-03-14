@@ -49,7 +49,7 @@ export default function DashboardOverview() {
   ];
 
   return (
-    <AuthProvider> 
+ 
     <div className="text-zinc-100 font-mono w-full">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
@@ -177,6 +177,6 @@ export default function DashboardOverview() {
         </div>
       </div>
     </div>
-    </AuthProvider>
+ 
   )
 }
